@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_05_125447) do
-
+ActiveRecord::Schema[8.0].define(version: 2025_07_13_153306) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -33,7 +32,7 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.text "metadata"
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
+    t.string "checksum"
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -52,8 +51,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.boolean "active", default: true, null: false
     t.string "password_reset_token"
     t.datetime "password_reset_requested_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
   end
 
@@ -66,8 +65,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.uuid "api_token", default: -> { "gen_random_uuid()" }, null: false
     t.string "password_reset_token"
     t.datetime "password_reset_requested_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "phone"
     t.index ["api_token"], name: "index_clients_on_api_token", unique: true
     t.index ["email"], name: "index_clients_on_email", unique: true
@@ -83,8 +82,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.string "code", null: false
     t.string "password_reset_token"
     t.datetime "password_reset_requested_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "title"
     t.index ["api_token"], name: "index_clinicians_on_api_token", unique: true
     t.index ["code"], name: "index_clinicians_on_code", unique: true
@@ -94,8 +93,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
   create_table "conversations", force: :cascade do |t|
     t.bigint "client_id", null: false
     t.boolean "archived", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "api_token", null: false
     t.index ["api_token"], name: "index_conversations_on_api_token", unique: true
     t.index ["client_id"], name: "index_conversations_on_client_id"
@@ -105,8 +104,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.datetime "day"
     t.bigint "clinician_id", null: false
     t.integer "count"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["clinician_id"], name: "index_daily_message_counters_on_clinician_id"
   end
 
@@ -117,8 +116,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.string "platform", null: false
     t.string "token", null: false
     t.string "arn"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_devices_on_client_id"
     t.index ["clinician_id"], name: "index_devices_on_clinician_id"
   end
@@ -135,16 +134,16 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.string "mobile"
     t.float "lat"
     t.float "lng"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "manager_email"
   end
 
   create_table "messages", force: :cascade do |t|
     t.bigint "conversation_id", null: false
     t.integer "urgency", default: 0, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "api_token", null: false
     t.bigint "clinician_id"
     t.index ["api_token"], name: "index_messages_on_api_token", unique: true
@@ -156,8 +155,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.string "body", null: false
     t.json "payload"
     t.integer "device_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "practices", force: :cascade do |t|
@@ -165,8 +164,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.bigint "location_id", null: false
     t.boolean "primary", default: false, null: false
     t.boolean "active", default: true, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["clinician_id"], name: "index_practices_on_clinician_id"
     t.index ["location_id"], name: "index_practices_on_location_id"
   end
@@ -190,11 +189,10 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.index ["job_class"], name: "que_scheduler_job_in_que_jobs_unique_index", unique: true, where: "(job_class = 'Que::Scheduler::SchedulerJob'::text)"
     t.index ["job_schema_version", "queue", "priority", "run_at", "id"], name: "que_poll_idx", where: "((finished_at IS NULL) AND (expired_at IS NULL))"
     t.index ["kwargs"], name: "que_jobs_kwargs_gin_idx", opclass: :jsonb_path_ops, using: :gin
-    t.check_constraint "(char_length(last_error_message) <= 500) AND (char_length(last_error_backtrace) <= 10000)", name: "error_length"
-    t.check_constraint "(jsonb_typeof(data) = 'object'::text) AND ((NOT (data ? 'tags'::text)) OR ((jsonb_typeof((data -> 'tags'::text)) = 'array'::text) AND (jsonb_array_length((data -> 'tags'::text)) <= 5) AND que_validate_tags((data -> 'tags'::text))))", name: "valid_data"
+    t.check_constraint "char_length(last_error_message) <= 500 AND char_length(last_error_backtrace) <= 10000", name: "error_length"
     t.check_constraint "char_length(queue) <= 100", name: "queue_length"
     t.check_constraint "jsonb_typeof(args) = 'array'::text", name: "valid_args"
-    t.check_constraint nil, name: "job_class_length"
+    t.check_constraint "jsonb_typeof(data) = 'object'::text AND (NOT data ? 'tags'::text OR jsonb_typeof(data -> 'tags'::text) = 'array'::text AND jsonb_array_length(data -> 'tags'::text) <= 5)", name: "valid_data"
   end
 
   create_table "que_lockers", primary_key: "pid", id: :integer, default: nil, force: :cascade do |t|
@@ -205,8 +203,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.text "queues", null: false, array: true
     t.boolean "listening", null: false
     t.integer "job_schema_version", default: 1
-    t.check_constraint "(array_ndims(queues) = 1) AND (array_length(queues, 1) IS NOT NULL)", name: "valid_queues"
-    t.check_constraint "(array_ndims(worker_priorities) = 1) AND (array_length(worker_priorities, 1) IS NOT NULL)", name: "valid_worker_priorities"
+    t.check_constraint "array_ndims(queues) = 1 AND array_length(queues, 1) IS NOT NULL", name: "valid_queues"
+    t.check_constraint "array_ndims(worker_priorities) = 1 AND array_length(worker_priorities, 1) IS NOT NULL", name: "valid_worker_priorities"
   end
 
   create_table "que_scheduler_audit", primary_key: "scheduler_job_id", id: :bigint, default: nil, comment: "7", force: :cascade do |t|
@@ -236,8 +234,8 @@ ActiveRecord::Schema.define(version: 2024_03_05_125447) do
     t.bigint "clinician_id", null: false
     t.boolean "primary", default: false, null: false
     t.boolean "active", default: true, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "notes"
     t.index ["client_id"], name: "index_relationships_on_client_id"
     t.index ["clinician_id"], name: "index_relationships_on_clinician_id"
